@@ -14,6 +14,14 @@ const songs = [
         album: "Ratchagan",
         cover: "ratchagan.png",
         url: "https://res.cloudinary.com/dtolzkugp/video/upload/v1778150519/Chandiranai_Thottathu_Yaar_-_4K_Video___Ratchagan_Video_Songs___Nagarjuna___AR_Rahman___Sushmita_Sen_320k_er7ydi.mp3"
+    },
+    {
+        id: 2,
+        title: "Enakke Enakkaa",
+        artist: "A.R. Rahman, Prashanth",
+        album: "Jeans",
+        cover: "jeans.png",
+        url: "http://res.cloudinary.com/dtolzkugp/video/upload/v1778155929/11_Enakke_Enakkaa_4K_Video_Song___Jeans___A.R.Rahman___Prashanth___Vairamuthu___AishwaryaRai_320k_ukurfs.mp3"
     }
 ];
 
@@ -38,6 +46,7 @@ const currentTimeEl = document.getElementById('current-time');
 const totalTimeEl = document.getElementById('total-time');
 
 const songListContainer = document.getElementById('song-list');
+const downloadCurrentBtn = document.getElementById('download-current-btn');
 
 // Initialize App
 function init() {
@@ -58,7 +67,10 @@ function renderSongCards() {
                     <i class="fas fa-play"></i>
                 </button>
             </div>
-            <div class="card-title">${song.title}</div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                <div class="card-title" style="margin-bottom: 0;">${song.title}</div>
+                <button class="control-icon" onclick="downloadSong(${index}, event)" style="width: auto; height: auto; font-size: 14px; padding: 0 4px;" title="Download"><i class="fas fa-download"></i></button>
+            </div>
             <div class="card-desc">${song.artist}</div>
         `;
         songListContainer.appendChild(card);
@@ -99,7 +111,7 @@ function pauseSong() {
 }
 
 // Play specific song from card
-window.playSpecificSong = function(index, event) {
+window.playSpecificSong = function (index, event) {
     event.stopPropagation(); // Prevent card click if any
     if (currentSongIndex === index) {
         togglePlay();
@@ -108,6 +120,15 @@ window.playSpecificSong = function(index, event) {
         loadSong(songs[currentSongIndex]);
         playSong();
     }
+}
+
+// Download specific song
+window.downloadSong = function(index, event) {
+    event.stopPropagation();
+    const song = songs[index];
+    // Modify URL to add fl_attachment for forced download
+    const downloadUrl = song.url.replace('/upload/', '/upload/fl_attachment/');
+    window.open(downloadUrl, '_blank');
 }
 
 function updateCardPlayIcons() {
@@ -155,11 +176,11 @@ function formatTime(seconds) {
 function updateProgress(e) {
     const { duration, currentTime } = e.srcElement;
     if (isNaN(duration)) return;
-    
+
     const progressPercent = (currentTime / duration) * 100;
     progressFill.style.width = `${progressPercent}%`;
     progressHandle.style.left = `${progressPercent}%`;
-    
+
     currentTimeEl.textContent = formatTime(currentTime);
     totalTimeEl.textContent = formatTime(duration);
 }
@@ -169,7 +190,7 @@ function setProgress(e) {
     const width = this.clientWidth;
     const clickX = e.offsetX;
     const duration = audio.duration;
-    
+
     audio.currentTime = (clickX / width) * duration;
 }
 
@@ -187,6 +208,14 @@ audio.addEventListener('loadedmetadata', () => {
 });
 
 progressContainer.addEventListener('click', setProgress);
+
+if (downloadCurrentBtn) {
+    downloadCurrentBtn.addEventListener('click', () => {
+        const song = songs[currentSongIndex];
+        const downloadUrl = song.url.replace('/upload/', '/upload/fl_attachment/');
+        window.open(downloadUrl, '_blank');
+    });
+}
 
 // Initialize
 init();

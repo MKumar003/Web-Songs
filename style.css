@@ -536,3 +536,73 @@ body {
 .volume-bar {
     width: 90px;
 }
+
+/* ================== RESPONSIVE DESIGN ================== */
+@media (max-width: 768px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        display: none;
+    }
+    
+    .main-view {
+        grid-column: 1 / -1;
+    }
+    
+    .playbar {
+        padding: 12px 16px;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+    }
+    
+    .now-playing {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 8px;
+    }
+    
+    .player-controls {
+        width: 100%;
+    }
+    
+    .volume-controls {
+        display: none;
+    }
+    
+    .top-bar {
+        padding: 0 16px;
+    }
+    
+    .content {
+        padding: 16px;
+    }
+    
+    .cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cover-art {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .control-buttons {
+        gap: 8px;
+    }
+    
+    .time {
+        min-width: 30px;
+        font-size: 10px;
+    }
+    
+    .section-header h2 {
+        font-size: 20px;
+    }
+}
