@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Web Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-logo">
+                <i class="fab fa-spotify"></i>
+                <span>Spotify</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active"><i class="fas fa-home"></i> <span>Home</span></li>
+                <li><i class="fas fa-search"></i> <span>Search</span></li>
+                <li><i class="fas fa-book"></i> <span>Your Library</span></li>
+            </ul>
+
+            <div class="sidebar-actions">
+                <div class="action-item">
+                    <div class="action-icon create-playlist"><i class="fas fa-plus"></i></div>
+                    <span>Create Playlist</span>
+                </div>
+                <div class="action-item">
+                    <div class="action-icon liked-songs"><i class="fas fa-heart"></i></div>
+                    <span>Liked Songs</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="playlists scrollable">
+                <p>A.R. Rahman Hits</p>
+                <p>Tamil 90s Classics</p>
+                <p>Cinematic Melodies</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-view">
+            <header class="top-bar">
+                <div class="nav-arrows">
+                    <button class="arrow-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="arrow-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="user-menu">
+                    <button class="upgrade-btn">Explore Premium</button>
+                    <button class="profile-btn"><i class="far fa-user"></i></button>
+                </div>
+            </header>
+
+            <div class="content scrollable">
+                <h2>Good evening</h2>
+                
+                <div class="recent-grid">
+                    <!-- Recent items could go here -->
+                </div>
+
+                <div class="section-header">
+                    <h2>Made For You</h2>
+                    <span class="see-all">Show all</span>
+                </div>
+
+                <div class="cards-grid" id="song-list">
+                    <!-- Song cards will be injected here by JS -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Playbar -->
+        <footer class="playbar">
+            <div class="now-playing" id="now-playing-info">
+                <img src="taj.png" alt="Album Art" id="current-cover" class="cover-art">
+                <div class="track-info">
+                    <div class="track-name" id="current-title">Eetchi Elumichi</div>
+                    <div class="artist-name" id="current-artist">A.R. Rahman, Manoj</div>
+                </div>
+                <button class="control-icon like-btn"><i class="far fa-heart"></i></button>
+            </div>
+
+            <div class="player-controls">
+                <div class="control-buttons">
+                    <button class="control-icon shuffle-btn"><i class="fas fa-random"></i></button>
+                    <button class="control-icon prev-btn" id="prev-btn"><i class="fas fa-step-backward"></i></button>
+                    <button class="play-pause-btn" id="play-pause-btn"><i class="fas fa-play" id="play-icon"></i></button>
+                    <button class="control-icon next-btn" id="next-btn"><i class="fas fa-step-forward"></i></button>
+                    <button class="control-icon repeat-btn"><i class="fas fa-redo"></i></button>
+                </div>
+                
+                <div class="playback-bar">
+                    <span class="time current-time" id="current-time">0:00</span>
+                    <div class="progress-bar-container" id="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                            <div class="progress-handle"></div>
+                        </div>
+                    </div>
+                    <span class="time total-time" id="total-time">0:00</span>
+                </div>
+            </div>
+
+            <div class="volume-controls">
+                <button class="control-icon"><i class="fas fa-microphone"></i></button>
+                <button class="control-icon"><i class="fas fa-list"></i></button>
+                <button class="control-icon"><i class="fas fa-desktop"></i></button>
+                <button class="control-icon"><i class="fas fa-volume-up"></i></button>
+                <div class="progress-bar-container volume-bar">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%;"></div>
+                        <div class="progress-handle"></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

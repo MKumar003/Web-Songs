@@ -1,0 +1,538 @@
+:root {
+    --bg-base: #121212;
+    --bg-elevated: #181818;
+    --bg-highlight: #282828;
+    --bg-active: #333333;
+    --spotify-green: #1db954;
+    --spotify-green-hover: #1ed760;
+    --text-base: #ffffff;
+    --text-subdued: #b3b3b3;
+    --sidebar-width: 240px;
+    --playbar-height: 90px;
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-base);
+    color: var(--text-base);
+    overflow: hidden; /* Prevent body scroll, let inner containers scroll */
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    border: 3px solid var(--bg-base);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.scrollable {
+    overflow-y: auto;
+}
+
+.app-container {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: 1fr var(--playbar-height);
+    height: 100vh;
+}
+
+/* ================== SIDEBAR ================== */
+.sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    background-color: #000000;
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-logo {
+    padding: 0 24px;
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0 8px;
+}
+
+.nav-links li {
+    padding: 0 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-subdued);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    border-radius: 4px;
+}
+
+.nav-links li:hover, .nav-links li.active {
+    color: var(--text-base);
+}
+.nav-links li i {
+    font-size: 20px;
+}
+
+.sidebar-actions {
+    margin-top: 24px;
+    padding: 0 24px;
+}
+
+.action-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-subdued);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 16px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.action-item:hover {
+    opacity: 1;
+    color: var(--text-base);
+}
+
+.action-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+}
+
+.create-playlist {
+    background-color: var(--text-subdued);
+    color: #000;
+}
+.action-item:hover .create-playlist {
+    background-color: var(--text-base);
+}
+
+.liked-songs {
+    background: linear-gradient(135deg, #450af5, #c4efd9);
+    color: var(--text-base);
+}
+
+.divider {
+    height: 1px;
+    background-color: #282828;
+    margin: 8px 24px;
+}
+
+.playlists {
+    flex: 1;
+    padding: 8px 24px;
+}
+
+.playlists p {
+    color: var(--text-subdued);
+    font-size: 14px;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.playlists p:hover {
+    color: var(--text-base);
+}
+
+/* ================== MAIN VIEW ================== */
+.main-view {
+    grid-column: 2;
+    grid-row: 1;
+    background-color: var(--bg-base);
+    background: linear-gradient(to bottom, #2b2b2b 0%, var(--bg-base) 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.top-bar {
+    height: 64px;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5); /* Semi-transparent */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.nav-arrows {
+    display: flex;
+    gap: 16px;
+}
+
+.arrow-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.7);
+    color: var(--text-base);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.upgrade-btn {
+    background-color: transparent;
+    color: var(--text-base);
+    border: 1px solid #878787;
+    border-radius: 500px;
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.1s, border-color 0.2s;
+}
+.upgrade-btn:hover {
+    border-color: var(--text-base);
+    transform: scale(1.04);
+}
+
+.profile-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.7);
+    color: var(--text-base);
+    border: none;
+    cursor: pointer;
+}
+
+.content {
+    padding: 24px 32px;
+    flex: 1;
+}
+
+.content h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+    margin-top: 32px;
+}
+.section-header h2 {
+    font-size: 24px;
+    margin-bottom: 0;
+}
+.see-all {
+    color: var(--text-subdued);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+.see-all:hover {
+    text-decoration: underline;
+}
+
+/* Grid for songs */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+}
+
+.song-card {
+    background-color: var(--bg-elevated);
+    padding: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.song-card:hover {
+    background-color: var(--bg-highlight);
+}
+
+.card-img-container {
+    width: 100%;
+    aspect-ratio: 1;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.card-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-play-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--spotify-green);
+    color: black;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+.card-play-btn i {
+    margin-left: 4px; /* visually center the play icon */
+}
+
+.song-card:hover .card-play-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+.card-play-btn:hover {
+    background-color: var(--spotify-green-hover);
+    transform: scale(1.05);
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-desc {
+    color: var(--text-subdued);
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ================== PLAYBAR ================== */
+.playbar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    background-color: var(--bg-elevated);
+    border-top: 1px solid #282828;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 100;
+}
+
+.now-playing {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    min-width: 180px;
+}
+
+.cover-art {
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+    margin-right: 14px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    object-fit: cover;
+}
+
+.track-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 14px;
+}
+
+.track-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-base);
+    cursor: pointer;
+}
+.track-name:hover {
+    text-decoration: underline;
+}
+
+.artist-name {
+    font-size: 12px;
+    color: var(--text-subdued);
+    cursor: pointer;
+}
+.artist-name:hover {
+    color: var(--text-base);
+    text-decoration: underline;
+}
+
+.control-icon {
+    background: transparent;
+    border: none;
+    color: var(--text-subdued);
+    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.control-icon:hover {
+    color: var(--text-base);
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    max-width: 722px;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.play-pause-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--text-base);
+    color: black;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+.play-pause-btn:hover {
+    transform: scale(1.05);
+}
+
+.playback-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.time {
+    font-size: 12px;
+    color: var(--text-subdued);
+    min-width: 40px;
+    text-align: center;
+}
+
+.progress-bar-container {
+    height: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: 4px;
+    width: 100%;
+    background-color: #535353;
+    border-radius: 2px;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--text-base);
+    border-radius: 2px;
+}
+
+.progress-handle {
+    width: 12px;
+    height: 12px;
+    background-color: var(--text-base);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 0%;
+    opacity: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.progress-bar-container:hover .progress-fill {
+    background-color: var(--spotify-green);
+}
+.progress-bar-container:hover .progress-handle {
+    opacity: 1;
+}
+
+.volume-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 30%;
+    min-width: 180px;
+    gap: 8px;
+}
+
+.volume-bar {
+    width: 90px;
+}
