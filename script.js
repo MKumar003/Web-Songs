@@ -56,8 +56,8 @@ function init() {
     // Initial fetch of uploaded files
     fetchCloudinaryFiles();
     
-    // Auto-detect new files every 10 seconds
-    setInterval(fetchCloudinaryFiles, 10000);
+    // Auto-detect new files every 1 second
+    setInterval(fetchCloudinaryFiles, 1000);
 }
 
 // Fetch newly uploaded files from cloudinary.json
