@@ -52,6 +52,65 @@ const downloadCurrentBtn = document.getElementById('download-current-btn');
 function init() {
     renderSongCards();
     loadSong(songs[currentSongIndex]);
+    
+    // Initial fetch of uploaded files
+    fetchCloudinaryFiles();
+    
+    // Auto-detect new files every 10 seconds
+    setInterval(fetchCloudinaryFiles, 10000);
+}
+
+// Fetch newly uploaded files from cloudinary.json
+async function fetchCloudinaryFiles() {
+    try {
+        // Cache-busting to ensure we always fetch the latest file state
+        const response = await fetch('cloudinary.json?t=' + new Date().getTime());
+        if (!response.ok) return;
+        const data = await response.json();
+        
+        let newSongsAdded = false;
+        
+        if (data && data.resources) {
+            data.resources.forEach(resource => {
+                // Check for audio files
+                if (resource.format === 'mp3' || resource.format === 'wav' || resource.is_audio) {
+                    // Prevent adding duplicates
+                    const exists = songs.some(song => 
+                        song.url === resource.secure_url || 
+                        song.url === resource.url ||
+                        (resource.public_id && song.url.includes(resource.public_id))
+                    );
+                    
+                    if (!exists) {
+                        let title = resource.display_name || resource.public_id || 'Unknown Title';
+                        // Clean up title for UI
+                        title = title.replace(/_/g, ' ');
+                        if (title.length > 40) {
+                            title = title.substring(0, 40) + '...';
+                        }
+                        
+                        const newSong = {
+                            id: songs.length,
+                            title: title,
+                            artist: "Cloud Upload",
+                            album: "Cloud Library",
+                            cover: "taj.png", // Default placeholder cover
+                            url: resource.secure_url || resource.url
+                        };
+                        songs.push(newSong);
+                        newSongsAdded = true;
+                    }
+                }
+            });
+        }
+        
+        if (newSongsAdded) {
+            renderSongCards();
+            updateCardPlayIcons(); // Preserve current playback visual state
+        }
+    } catch (error) {
+        console.error("Error fetching newly uploaded files:", error);
+    }
 }
 
 // Render Song Cards
